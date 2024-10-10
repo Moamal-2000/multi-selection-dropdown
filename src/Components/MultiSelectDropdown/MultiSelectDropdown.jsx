@@ -6,16 +6,17 @@ const MultiSelectDropdown = ({ data }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [activeMenus, setActiveMenus] = useState([]);
 
-  function handleSelect(id, parentNodeId) {
+  function handleSelect(id) {
     setSelectedItems((prev) => {
       const isSelected = prev.includes(id);
-      if (!isSelected) return [...prev, id, parentNodeId];
+
+      if (!isSelected) {
+        const withChildren = addChildNodes(id, data, prev);
+        return [...withChildren, id];
+      }
 
       const withoutChildren = removeChildNodes(id, data, prev);
-      const filteredByParentId = withoutChildren.filter(
-        (itemId) => itemId !== parentNodeId
-      );
-      return filteredByParentId.filter((itemId) => itemId !== id);
+      return withoutChildren.filter((itemId) => itemId !== id);
     });
   }
 
@@ -67,4 +68,18 @@ function findNodeById(id, nodes) {
   }
 
   return null;
+}
+
+function addChildNodes(parentId, nodes, selectedItems) {
+  const parentNode = findNodeById(parentId, nodes);
+  if (!parentNode || !parentNode.Nodes) return selectedItems;
+
+  parentNode.Nodes.forEach((child) => {
+    if (!selectedItems.includes(child.id))
+      selectedItems = [...selectedItems, child.id];
+
+    selectedItems = addChildNodes(child.id, nodes, selectedItems);
+  });
+
+  return selectedItems;
 }
