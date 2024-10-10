@@ -50,4 +50,9 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  display: none;
+}
+
+.menu .otherMenu.collapse {
+  display: block;
 }

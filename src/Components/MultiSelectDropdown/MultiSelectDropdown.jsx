@@ -4,6 +4,7 @@ import s from "./MultiSelectDropdown.module.css";
 
 const MultiSelectDropdown = ({ data }) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [activeMenus, setActiveMenus] = useState([]);
 
   function handleSelect(id, parentNodeId) {
     setSelectedItems((prev) => {
@@ -18,12 +19,23 @@ const MultiSelectDropdown = ({ data }) => {
     });
   }
 
+  function handleToggleMenu(menuId, parentId) {
+    setActiveMenus((prev) => {
+      const isActive = prev.includes(menuId);
+      if (!isActive) return [...prev, menuId];
+      return prev.filter((itemId) => itemId !== menuId);
+    });
+  }
+
   return (
     <div className={s.multiSelectDropDown}>
       <DropDownMenu
         nodes={data}
         selectedItems={selectedItems}
         handleSelect={handleSelect}
+        handleToggleMenu={handleToggleMenu}
+        activeMenus={activeMenus}
+        setActiveMenus={setActiveMenus}
       />
     </div>
   );
