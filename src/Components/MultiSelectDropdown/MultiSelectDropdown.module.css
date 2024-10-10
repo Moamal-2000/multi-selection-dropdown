@@ -5,4 +5,5 @@
   padding: 20px;
   background-color: #fff;
   gap: 4px;
+  min-height: 400px;
 }

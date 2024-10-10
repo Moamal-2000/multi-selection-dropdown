@@ -14,7 +14,7 @@ const DropDownMenu = ({
   const lastItemClass = nodes?.[0].Nodes.length === 0 ? s.lastItem : "";
 
   return nodes.map((node) => {
-    const collapseClass = activeMenus.includes(node.id) ? s.collapse : "";
+    const collapseClass = !activeMenus.includes(node.id) ? s.collapse : "";
 
     return (
       <div key={node.id} className={`${s.menu} ${innerMenuClass}`}>
@@ -23,9 +23,9 @@ const DropDownMenu = ({
             <button
               type="button"
               className={s.toggleButton}
-              onClick={() => handleToggleMenu(node.id, parentId)}
+              onClick={() => handleToggleMenu(node.id)}
             >
-              +
+              {collapseClass ? "+" : "-"}
             </button>
           )}
 

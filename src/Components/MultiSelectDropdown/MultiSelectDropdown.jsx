@@ -19,7 +19,7 @@ const MultiSelectDropdown = ({ data }) => {
     });
   }
 
-  function handleToggleMenu(menuId, parentId) {
+  function handleToggleMenu(menuId) {
     setActiveMenus((prev) => {
       const isActive = prev.includes(menuId);
       if (!isActive) return [...prev, menuId];
