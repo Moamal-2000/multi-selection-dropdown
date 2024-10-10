@@ -1,0 +1,38 @@
+.wrapper {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  border: solid 2px #626262;
+  border-radius: 3px;
+  background-color: #dedede;
+  position: relative;
+}
+
+.wrapper::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 2px);
+  translate: -50% -50%;
+}
+
+.wrapper.haltTick::before {
+  content: "-";
+}
+
+.wrapper.checked::before {
+  content: "✓";
+  top: 50%;
+  font-size: .6rem;
+  font-weight: bold;
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  cursor: pointer;
+  border: none;
+  opacity: 0;
+}

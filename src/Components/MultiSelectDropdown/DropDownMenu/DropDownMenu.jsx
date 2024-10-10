@@ -1,3 +1,4 @@
+import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
 import s from "./DropDownMenu.module.css";
 
 const DropDownMenu = ({
@@ -29,12 +30,11 @@ const DropDownMenu = ({
             </button>
           )}
 
-          <input
-            className={s.checkbox}
-            type="checkbox"
-            checked={selectedItems.includes(node.id)}
-            onChange={() => handleSelect(node.id, parentId)}
-            id={node.Parentnodeid + "-" + node.id}
+          <CustomCheckbox
+            selectedItems={selectedItems}
+            node={node}
+            parentId={parentId}
+            handleSelect={handleSelect}
           />
 
           <label

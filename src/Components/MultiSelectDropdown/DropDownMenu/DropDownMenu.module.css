@@ -33,12 +33,6 @@
   cursor: pointer;
 }
 
-.checkbox {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
 .label {
   cursor: pointer;
   user-select: none;
