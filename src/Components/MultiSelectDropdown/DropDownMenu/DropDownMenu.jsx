@@ -7,30 +7,48 @@ const DropDownMenu = ({
   handleSelect,
   type = "outer-menu",
 }) => {
-  const menuClass = type === "inner-menu" ? s.innerMenu : s.outerMenu;
+  const innerMenuClass = type === "inner-menu" ? s.innerMenu : "";
+  const lastItemClass = nodes?.[0].Nodes.length === 0 ? s.lastItem : "";
+
+
+  function handleToggleMenu() {}
 
   return nodes.map((node) => (
-    <div key={node.id} className={menuClass}>
-      <input
-        className={s.checkbox}
-        type="checkbox"
-        checked={selectedItems.includes(node.id)}
-        onChange={() => handleSelect(node.id, parentId)}
-        id={node.Parentnodeid + "-" + node.id}
-      />
+    <div key={node.id} className={`${s.menu} ${innerMenuClass}`}>
+      <div className={`${s.item} ${lastItemClass}`}>
+        {node.Nodes.length > 0 && (
+          <button
+            type="button"
+            className={s.toggleButton}
+            onClick={handleToggleMenu}
+          >
+            +
+          </button>
+        )}
 
-      <label htmlFor={node.Parentnodeid + "-" + node.id} className={s.label}>
-        {node.displayname}
-      </label>
+        <input
+          className={s.checkbox}
+          type="checkbox"
+          checked={selectedItems.includes(node.id)}
+          onChange={() => handleSelect(node.id, parentId)}
+          id={node.Parentnodeid + "-" + node.id}
+        />
+
+        <label htmlFor={node.Parentnodeid + "-" + node.id} className={s.label}>
+          {node.displayname}
+        </label>
+      </div>
 
       {node.Nodes.length > 0 && (
-        <DropDownMenu
-          nodes={node.Nodes}
-          parentId={node.id}
-          handleSelect={handleSelect}
-          selectedItems={selectedItems}
-          type="inner-menu"
-        />
+        <div className={s.otherMenu}>
+          <DropDownMenu
+            nodes={node.Nodes}
+            parentId={node.id}
+            handleSelect={handleSelect}
+            selectedItems={selectedItems}
+            type="inner-menu"
+          />
+        </div>
       )}
     </div>
   ));

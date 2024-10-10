@@ -1,17 +1,36 @@
-.outerMenu {
-  color: #fff;
-  padding: 10px;
-  margin: 10px;
+.menu {
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .innerMenu {
   margin-left: 20px;
-  background-color: #fff;
-  color: #000;
-  padding: 10px;
-  margin: 20px;
   width: fit-content;
+}
+
+.menu .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu .item.lastItem {
+  margin-left: calc(2px + 20px);
+}
+
+.toggleButton {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .checkbox {
@@ -21,7 +40,14 @@
 }
 
 .label {
-  padding-left: 10px;
   cursor: pointer;
   user-select: none;
+  padding-left: 4px;
+  font-size: .9rem;
+}
+
+.menu .otherMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

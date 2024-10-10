@@ -1,4 +1,8 @@
 .multiSelectDropDown {
   display: flex;
-  background-color: rgb(80, 80, 80);
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  gap: 4px;
 }
