@@ -1,23 +1,36 @@
 import s from "./CustomCheckbox.module.css";
 
 const CustomCheckbox = ({ selectedItems, node, parentId, handleSelect }) => {
-  const checkedClass = selectedItems.includes(node.id) ? s.checked : "";
-  const halfTickClass = selectedItems.includes(node.id) ? s.halfTick : "";
-  const innerMenusIds = node.Nodes?.map((node) => node.id)
+  const innerMenusIds = node.Nodes?.map((childNode) => childNode.id) || [];
 
-  // console.log(node);
-  console.log(innerMenusIds);
+  const isAllChildrenChecked =
+    innerMenusIds.length > 0 &&
+    innerMenusIds.every((id) => selectedItems.includes(id));
+
+  const isSomeChildrenChecked = innerMenusIds.some((id) =>
+    selectedItems.includes(id)
+  );
+
+  const isChecked = selectedItems.includes(node.id);
+
+  const checkedClass = isChecked ? s.checked : "";
+  const halfTickClass = !isChecked && isSomeChildrenChecked ? s.halfTick : "";
+  const allCheckedClass = isAllChildrenChecked ? s.allChecked : "";
 
   return (
-    <div className={`${s.wrapper} ${checkedClass} ${halfTickClass}`}>
+    <div
+      className={`${s.wrapper} ${checkedClass} ${halfTickClass} ${allCheckedClass}`}
+    >
       <input
         className={s.checkbox}
         type="checkbox"
-        checked={selectedItems.includes(node.id)}
+        checked={isChecked}
+        aria-checked={isChecked}
         onChange={() => handleSelect(node.id, parentId)}
         id={node.Parentnodeid + "-" + node.id}
       />
     </div>
   );
 };
+
 export default CustomCheckbox;

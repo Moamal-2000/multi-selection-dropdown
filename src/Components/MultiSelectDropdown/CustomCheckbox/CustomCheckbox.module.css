@@ -16,11 +16,18 @@
   translate: -50% -50%;
 }
 
-.wrapper.haltTick::before {
+.wrapper.checked::before {
+  content: "✓";
+  top: 50%;
+  font-size: .6rem;
+  font-weight: bold;
+}
+
+.wrapper.halfTick::before {
   content: "-";
 }
 
-.wrapper.checked::before {
+.wrapper.allChecked::before {
   content: "✓";
   top: 50%;
   font-size: .6rem;
