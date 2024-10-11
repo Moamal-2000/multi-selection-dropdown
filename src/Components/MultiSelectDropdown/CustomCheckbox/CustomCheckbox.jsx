@@ -14,7 +14,8 @@ const CustomCheckbox = ({ selectedItems, node, parentId, handleSelect }) => {
   const isChecked = selectedItems.includes(node.id);
 
   const checkedClass = isChecked ? s.checked : "";
-  const halfTickClass = !isChecked && isSomeChildrenChecked ? s.halfTick : "";
+  const halfTickClass =
+    isSomeChildrenChecked && !isAllChildrenChecked ? s.halfTick : "";
   const allCheckedClass = isAllChildrenChecked ? s.allChecked : "";
 
   return (
