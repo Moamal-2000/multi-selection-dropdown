@@ -19,17 +19,23 @@ const CustomCheckbox = ({ selectedItems, node, parentId, handleSelect }) => {
   const allCheckedClass = isAllChildrenChecked ? s.allChecked : "";
 
   return (
-    <div
-      className={`${s.wrapper} ${checkedClass} ${halfTickClass} ${allCheckedClass}`}
-    >
-      <input
-        className={s.checkbox}
-        type="checkbox"
-        checked={isChecked}
-        aria-checked={isChecked}
-        onChange={() => handleSelect(node.id, parentId)}
-        id={node.Parentnodeid + "-" + node.id}
-      />
+    <div className={s.customCheckbox}>
+      <div
+        className={`${s.wrapper} ${checkedClass} ${halfTickClass} ${allCheckedClass}`}
+      >
+        <input
+          className={s.checkbox}
+          type="checkbox"
+          checked={isChecked}
+          aria-checked={isChecked}
+          onChange={() => handleSelect(node.id, parentId)}
+          id={node.Parentnodeid + "-" + node.id}
+        />
+      </div>
+
+      <label htmlFor={node.Parentnodeid + "-" + node.id} className={s.label}>
+        {node.displayname}
+      </label>
     </div>
   );
 };

@@ -2,49 +2,48 @@
   width: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--dropdown-gap);
 }
 
 .innerMenu {
-  margin-left: 20px;
+  margin-left: var(--dropdown-left-space);
   width: fit-content;
 }
 
 .menu .item {
   display: flex;
   align-items: center;
-  gap: 6px;
 }
 
 .menu .item.lastItem {
-  margin-left: calc(2px + 20px);
+  margin-left: calc(2px + var(--dropdown-left-space));
 }
 
 .toggleButton {
   border: none;
   outline: none;
   background-color: transparent;
-  font-size: 1rem;
+  color: #5b5b5b;
+  font-size: .9rem;
   width: 16px;
   height: 16px;
+  padding-right: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+  top: -1px;
 }
 
-.label {
-  cursor: pointer;
-  user-select: none;
-  padding-left: 4px;
-  font-size: .9rem;
+.toggleButton.collapse {
+  top: 0;
 }
 
 .menu .otherMenu {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  display: block;
+  gap: var(--dropdown-gap);
 }
 
 .menu .otherMenu.collapse {

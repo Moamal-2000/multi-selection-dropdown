@@ -23,7 +23,7 @@ const DropDownMenu = ({
           {node.Nodes.length > 0 && (
             <button
               type="button"
-              className={s.toggleButton}
+              className={`${s.toggleButton} ${collapseClass}`}
               onClick={() => handleToggleMenu(node.id)}
             >
               {collapseClass ? "+" : "-"}
@@ -36,13 +36,6 @@ const DropDownMenu = ({
             parentId={parentId}
             handleSelect={handleSelect}
           />
-
-          <label
-            htmlFor={node.Parentnodeid + "-" + node.id}
-            className={s.label}
-          >
-            {node.displayname}
-          </label>
         </div>
 
         {node.Nodes.length > 0 && (

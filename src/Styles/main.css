@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +12,8 @@ html {
 
 body {
   background-color: #f9f9f9;
+  color: #5b5b5b;
+  font-family: monospace, sans-serif;
 }
 
 label {

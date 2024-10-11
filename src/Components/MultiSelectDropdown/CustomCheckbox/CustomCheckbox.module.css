@@ -1,3 +1,8 @@
+.customCheckbox {
+  display: flex;
+  align-items: center;
+}
+
 .wrapper {
   width: 15px;
   height: 15px;
@@ -14,24 +19,24 @@
   left: 50%;
   top: calc(50% - 2px);
   translate: -50% -50%;
+  font-size: .6rem;
+  font-weight: bold;
 }
 
 .wrapper.checked::before {
   content: "✓";
   top: 50%;
-  font-size: .6rem;
-  font-weight: bold;
 }
 
 .wrapper.halfTick::before {
   content: "-";
+  top: calc(50% - 1px);
+  font-size: 1rem;
 }
 
 .wrapper.allChecked::before {
   content: "✓";
   top: 50%;
-  font-size: .6rem;
-  font-weight: bold;
 }
 
 .checkbox {
@@ -42,4 +47,11 @@
   cursor: pointer;
   border: none;
   opacity: 0;
+}
+
+.label {
+  cursor: pointer;
+  user-select: none;
+  padding-left: 6px;
+  font-size: .8rem;
 }
