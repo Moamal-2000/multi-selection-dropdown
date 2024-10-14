@@ -1,0 +1,57 @@
+.customCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  border: solid 2px #626262;
+  border-radius: 3px;
+  background-color: #dedede;
+  position: relative;
+}
+
+.wrapper::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 2px);
+  translate: -50% -50%;
+  font-size: .6rem;
+  font-weight: bold;
+}
+
+.wrapper.checked::before {
+  content: "✓";
+  top: 50%;
+}
+
+.wrapper.halfTick::before {
+  content: "-";
+  top: calc(50% - 1px);
+  font-size: 1rem;
+}
+
+.wrapper.allChecked::before {
+  content: "✓";
+  top: 50%;
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  cursor: pointer;
+  border: none;
+  opacity: 0;
+}
+
+.label {
+  cursor: pointer;
+  user-select: none;
+  padding-left: 6px;
+  font-size: .8rem;
+}

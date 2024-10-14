@@ -1,0 +1,51 @@
+.menu {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dropdown-gap);
+}
+
+.innerMenu {
+  margin-left: var(--dropdown-left-space);
+  width: fit-content;
+}
+
+.menu .item {
+  display: flex;
+  align-items: center;
+}
+
+.menu .item.lastItem {
+  margin-left: calc(var(--dropdown-left-space) - 4px);
+}
+
+.toggleButton {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #5b5b5b;
+  font-size: .9rem;
+  width: 16px;
+  height: 16px;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  top: -1px;
+}
+
+.toggleButton.collapse {
+  top: 0;
+}
+
+.menu .otherMenu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dropdown-gap);
+}
+
+.menu .otherMenu.collapse {
+  display: none;
+}

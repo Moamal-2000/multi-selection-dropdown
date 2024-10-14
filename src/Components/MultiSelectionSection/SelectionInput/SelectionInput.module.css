@@ -1,0 +1,50 @@
+.selectionInput {
+  background-color: #fff;
+  border: solid 1px #ccc;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.input {
+  outline: none;
+  border: none;
+  flex: 1;
+  height: 30px;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.selectedItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 700px;
+}
+
+.selectedItem {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  background-color: #f5f4f2;
+  padding: 4px;
+}
+
+.selectedItem>span {
+  font-size: .7rem;
+  text-wrap: nowrap;
+  padding-right: 4px;
+  color: #000;
+}
+
+.selectedItem button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: .6rem;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

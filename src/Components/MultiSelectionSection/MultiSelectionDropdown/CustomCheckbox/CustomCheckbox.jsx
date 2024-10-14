@@ -1,0 +1,34 @@
+import s from "./CustomCheckbox.module.css";
+
+const CustomCheckbox = ({
+  node,
+  isChecked,
+  isIndeterminate,
+  handleCheckboxChange,
+}) => {
+  const checkedClass = isChecked ? s.checked : "";
+  const halfTickClass = isIndeterminate ? s.halfTick : "";
+
+  return (
+    <div className={s.customCheckbox}>
+      <div className={`${s.wrapper} ${checkedClass} ${halfTickClass}`}>
+        <input
+          className={s.checkbox}
+          type="checkbox"
+          checked={isChecked}
+          id={`${node.Parentnodeid}-${node.id}`}
+          ref={(input) => {
+            if (input) input.indeterminate = isIndeterminate;
+          }}
+          onChange={handleCheckboxChange}
+        />
+      </div>
+
+      <label htmlFor={`${node.Parentnodeid}-${node.id}`} className={s.label}>
+        {node.displayname}
+      </label>
+    </div>
+  );
+};
+
+export default CustomCheckbox;
