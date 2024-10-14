@@ -13,7 +13,7 @@ export const dropDownData = [
         Nodes: [
           {
             id: 320,
-            displayname: "Miscellenous",
+            displayname: "Miscellenous-1",
             hirerchicalid: "63101010",
             Label: "Miscellenous",
             Nodes: [],
@@ -39,7 +39,7 @@ export const dropDownData = [
         Nodes: [
           {
             id: 324,
-            displayname: "professional",
+            displayname: "professional-1",
             hirerchicalid: "63103010",
             Label: "professional",
             Nodes: [],
@@ -57,7 +57,7 @@ export const dropDownData = [
         Nodes: [
           {
             id: 322,
-            displayname: "school",
+            displayname: "school-1",
             hirerchicalid: "63102010",
             Label: "school",
             Nodes: [],
@@ -78,7 +78,7 @@ export const dropDownData = [
     Nodes: [
       {
         id: 14,
-        displayname: "basic",
+        displayname: "basic-1",
         hirerchicalid: "511010",
         Label: "basic",
         Nodes: [],

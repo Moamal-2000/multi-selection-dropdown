@@ -11,16 +11,29 @@ function App() {
     selectedItems: [],
   });
 
-  const selectedItems = checkedState.checkedNodes.map((id) =>
+  let selectedItems = checkedState.checkedNodes.map((id) =>
     findNodeById(dropDownData, id)
   );
 
+  selectedItems.forEach((node) => {
+    if (node.Nodes.length > 0) {
+      const currentNode = findNodeById(dropDownData, node.id);
+      const currentNodeIds = currentNode.Nodes.map((node) => node.id);
+      const allChildrenChecked = node.Nodes.every((child) =>
+        currentNodeIds.includes(child.id)
+      );
+
+      if (allChildrenChecked) {
+        selectedItems = selectedItems.filter(
+          (node) => !currentNodeIds.includes(node.id)
+        );
+      }
+    }
+  });
+
   return (
     <div className="App">
-      <SelectionInput
-        selectedItems={selectedItems}
-        placeholder="Choose..."
-      />
+      <SelectionInput selectedItems={selectedItems} placeholder="Choose..." />
       <MultiSelectDropdown
         data={dropDownData}
         checkedState={checkedState}
