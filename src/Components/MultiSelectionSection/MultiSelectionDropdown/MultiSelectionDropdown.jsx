@@ -1,8 +1,8 @@
-import { findNodeById } from "../../Functions/helper";
+import { findNodeById } from "../../../Functions/helper";
 import DropDownMenu from "./DropDownMenu/DropDownMenu";
-import s from "./MultiSelectDropdown.module.css";
+import s from "./MultiSelectionDropdown.module.css";
 
-const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
+const MultiSelectionDropdown = ({ data, checkedState, setCheckedState }) => {
   function updateChildren(node, isChecked, updatedCheckedNodes) {
     if (isChecked) {
       if (!updatedCheckedNodes.includes(node.id)) {
@@ -119,7 +119,7 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
   }
 
   return (
-    <div className={s.multiSelectDropDown}>
+    <div className={s.multiSelectionDropDown}>
       {data.map((node) => (
         <DropDownMenu
           key={node.id}
@@ -132,4 +132,4 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
   );
 };
 
-export default MultiSelectDropdown;
+export default MultiSelectionDropdown;
