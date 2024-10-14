@@ -16,7 +16,7 @@ const CustomCheckbox = ({
           className={s.checkbox}
           type="checkbox"
           checked={isChecked}
-          id={`${node.parentId}-${node.id}`}
+          id={`${node.Parentnodeid}-${node.id}`}
           ref={(input) => {
             if (input) input.indeterminate = isIndeterminate;
           }}
@@ -24,7 +24,7 @@ const CustomCheckbox = ({
         />
       </div>
 
-      <label htmlFor={`${node.parentId}-${node.id}`} className={s.label}>
+      <label htmlFor={`${node.Parentnodeid}-${node.id}`} className={s.label}>
         {node.displayname}
       </label>
     </div>
