@@ -1,85 +1,122 @@
-import { useState } from "react";
+import { findNodeById } from "../../Functions/helper";
 import DropDownMenu from "./DropDownMenu/DropDownMenu";
 import s from "./MultiSelectDropdown.module.css";
 
-const MultiSelectDropdown = ({ data }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [activeMenus, setActiveMenus] = useState([]);
-
-  function handleSelect(id) {
-    setSelectedItems((prev) => {
-      const isSelected = prev.includes(id);
-
-      if (!isSelected) {
-        const withChildren = addChildNodes(id, data, prev);
-        return [...withChildren, id];
+const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
+  function updateChildren(node, isChecked, updatedCheckedNodes) {
+    if (isChecked) {
+      if (!updatedCheckedNodes.includes(node.id)) {
+        updatedCheckedNodes.push(node.id);
       }
+    } else {
+      updatedCheckedNodes = updatedCheckedNodes.filter((id) => id !== node.id);
+    }
 
-      const withoutChildren = removeChildNodes(id, data, prev);
-      return withoutChildren.filter((itemId) => itemId !== id);
+    node.Nodes.forEach((child) => {
+      updatedCheckedNodes = updateChildren(
+        child,
+        isChecked,
+        updatedCheckedNodes
+      );
+    });
+
+    return updatedCheckedNodes;
+  }
+
+  function handleNodeCheck(node, isChecked) {
+    const { updatedCheckedNodes, updatedIndeterminateNodes } =
+      updateCheckedState(node, isChecked);
+
+    setCheckedState({
+      checkedNodes: updatedCheckedNodes,
+      indeterminateNodes: updatedIndeterminateNodes,
     });
   }
 
-  function handleToggleMenu(menuId) {
-    setActiveMenus((prev) => {
-      const isActive = prev.includes(menuId);
-      if (!isActive) return [...prev, menuId];
-      return prev.filter((itemId) => itemId !== menuId);
-    });
+  function updateCheckedState(currentNode, isChecked) {
+    let updatedCheckedNodes = [...checkedState.checkedNodes];
+    let updatedIndeterminateNodes = [...checkedState.indeterminateNodes];
+
+    if (isChecked) {
+      if (!updatedCheckedNodes.includes(currentNode.id)) {
+        updatedCheckedNodes.push(currentNode.id);
+      }
+      updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
+        (id) => id !== currentNode.id
+      );
+    } else {
+      updatedCheckedNodes = updatedCheckedNodes.filter(
+        (id) => id !== currentNode.id
+      );
+    }
+
+    updatedCheckedNodes = updateChildren(
+      currentNode,
+      isChecked,
+      updatedCheckedNodes
+    );
+
+    function updateParentState(parentNodeId) {
+      const parentNode = findNodeById(data, parentNodeId);
+      if (!parentNode) return;
+
+      const childIds = parentNode.Nodes.map((child) => child.id);
+      const checkedChildren = childIds.filter((id) =>
+        updatedCheckedNodes.includes(id)
+      );
+      const indeterminateChildren = childIds.filter((id) =>
+        updatedIndeterminateNodes.includes(id)
+      );
+      const allChildrenChecked =
+        checkedChildren.length === childIds.length &&
+        indeterminateChildren.length === 0;
+      const isParentUnchecked = !updatedCheckedNodes.includes(parentNode.id);
+
+      if (checkedChildren.length === 0) {
+        updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
+          (id) => id !== parentNode.id
+        );
+
+        updatedCheckedNodes = updatedCheckedNodes.filter(
+          (id) => id !== parentNode.id
+        );
+      } else if (allChildrenChecked) {
+        updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
+          (id) => id !== parentNode.id
+        );
+
+        if (isParentUnchecked) {
+          updatedCheckedNodes.push(parentNode.id);
+        }
+      } else {
+        if (!updatedIndeterminateNodes.includes(parentNode.id)) {
+          updatedIndeterminateNodes.push(parentNode.id);
+        }
+
+        updatedCheckedNodes = updatedCheckedNodes.filter(
+          (id) => id !== parentNode.id
+        );
+      }
+
+      updateParentState(parentNode.Parentnodeid);
+    }
+
+    updateParentState(currentNode.Parentnodeid);
+    return { updatedCheckedNodes, updatedIndeterminateNodes };
   }
 
   return (
     <div className={s.multiSelectDropDown}>
-      <DropDownMenu
-        nodes={data}
-        selectedItems={selectedItems}
-        handleSelect={handleSelect}
-        handleToggleMenu={handleToggleMenu}
-        activeMenus={activeMenus}
-        setActiveMenus={setActiveMenus}
-      />
+      {data.map((node) => (
+        <DropDownMenu
+          key={node.id}
+          node={node}
+          onNodeCheck={handleNodeCheck}
+          checkedState={checkedState}
+        />
+      ))}
     </div>
   );
 };
 
 export default MultiSelectDropdown;
-
-function removeChildNodes(parentId, nodes, selectedItems) {
-  const parentNode = findNodeById(parentId, nodes);
-  if (!parentNode || !parentNode.Nodes) return selectedItems;
-
-  parentNode.Nodes.forEach((child) => {
-    selectedItems = selectedItems.filter((itemId) => itemId !== child.id);
-    selectedItems = removeChildNodes(child.id, nodes, selectedItems); // تكرارية
-  });
-
-  return selectedItems;
-}
-
-function findNodeById(id, nodes) {
-  for (let node of nodes) {
-    if (node.id === id) return node;
-
-    if (node.Nodes.length > 0) {
-      const childNode = findNodeById(id, node.Nodes);
-
-      if (childNode) return childNode;
-    }
-  }
-
-  return null;
-}
-
-function addChildNodes(parentId, nodes, selectedItems) {
-  const parentNode = findNodeById(parentId, nodes);
-  if (!parentNode || !parentNode.Nodes) return selectedItems;
-
-  parentNode.Nodes.forEach((child) => {
-    if (!selectedItems.includes(child.id))
-      selectedItems = [...selectedItems, child.id];
-
-    selectedItems = addChildNodes(child.id, nodes, selectedItems);
-  });
-
-  return selectedItems;
-}

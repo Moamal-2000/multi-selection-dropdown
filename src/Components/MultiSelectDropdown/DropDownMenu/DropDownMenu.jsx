@@ -1,59 +1,63 @@
+import { useState } from "react";
 import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
 import s from "./DropDownMenu.module.css";
 
 const DropDownMenu = ({
-  nodes,
-  parentId = null,
-  selectedItems,
-  handleSelect,
-  handleToggleMenu,
-  activeMenus,
-  setActiveMenus,
+  node,
+  onNodeCheck,
+  checkedState,
   type = "outer-menu",
 }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const isLastNode = node.Nodes.length !== 0;
+  const isChecked = checkedState.checkedNodes.includes(node.id);
+  const isIndeterminate = checkedState.indeterminateNodes.includes(node.id);
+  const lastItemClass = !isLastNode ? s.lastItem : "";
   const innerMenuClass = type === "inner-menu" ? s.innerMenu : "";
-  const lastItemClass = nodes?.[0].Nodes.length === 0 ? s.lastItem : "";
 
-  return nodes.map((node) => {
-    const collapseClass = !activeMenus.includes(node.id) ? s.collapse : "";
+  function handleCheckboxChange(event) {
+    const isChecked = event.target.checked;
+    onNodeCheck(node, isChecked);
+  }
 
-    return (
-      <div key={node.id} className={`${s.menu} ${innerMenuClass}`}>
-        <div className={`${s.item} ${lastItemClass}`}>
-          {node.Nodes.length > 0 && (
-            <button
-              type="button"
-              className={`${s.toggleButton} ${collapseClass}`}
-              onClick={() => handleToggleMenu(node.id)}
-            >
-              {collapseClass ? "+" : "-"}
-            </button>
-          )}
-
-          <CustomCheckbox
-            selectedItems={selectedItems}
-            node={node}
-            parentId={parentId}
-            handleSelect={handleSelect}
-          />
-        </div>
-
-        {node.Nodes.length > 0 && (
-          <div className={`${s.otherMenu} ${collapseClass}`}>
-            <DropDownMenu
-              nodes={node.Nodes}
-              parentId={node.id}
-              handleSelect={handleSelect}
-              handleToggleMenu={handleToggleMenu}
-              selectedItems={selectedItems}
-              activeMenus={activeMenus}
-              setActiveMenus={setActiveMenus}
-              type="inner-menu"
-            />
-          </div>
+  return (
+    <div className={`${s.menu} ${innerMenuClass}`}>
+      <div className={`${s.item} ${lastItemClass}`}>
+        {isLastNode && (
+          <button
+            type="button"
+            className={s.toggleButton}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {node.Nodes.length > 0 && (expanded ? "-" : "+")}
+          </button>
         )}
+
+        <CustomCheckbox
+          node={node}
+          isChecked={isChecked}
+          isIndeterminate={isIndeterminate}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
-    );
-  });
+
+      {expanded && (
+        <div className={s.otherMenu}>
+          {node.Nodes.length > 0 &&
+            node.Nodes.map((childNode) => (
+              <DropDownMenu
+                key={childNode.id}
+                node={childNode}
+                onNodeCheck={onNodeCheck}
+                checkedState={checkedState}
+                type="inner-menu"
+              />
+            ))}
+        </div>
+      )}
+    </div>
+  );
 };
+
 export default DropDownMenu;

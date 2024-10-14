@@ -16,7 +16,7 @@
 }
 
 .menu .item.lastItem {
-  margin-left: calc(2px + var(--dropdown-left-space));
+  margin-left: calc(var(--dropdown-left-space) - 4px);
 }
 
 .toggleButton {

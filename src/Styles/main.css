@@ -16,6 +16,10 @@ body {
   font-family: monospace, sans-serif;
 }
 
+.App {
+  margin: 20px;
+}
+
 label {
   user-select: none;
   cursor: pointer;
