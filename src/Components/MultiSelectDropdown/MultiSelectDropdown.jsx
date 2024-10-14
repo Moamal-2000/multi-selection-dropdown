@@ -24,18 +24,23 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
   }
 
   function handleNodeCheck(node, isChecked) {
-    const { updatedCheckedNodes, updatedIndeterminateNodes } =
-      updateCheckedState(node, isChecked);
+    const {
+      updatedCheckedNodes,
+      updatedIndeterminateNodes,
+      updatedSelectedItems,
+    } = updateCheckedState(node, isChecked);
 
     setCheckedState({
       checkedNodes: updatedCheckedNodes,
       indeterminateNodes: updatedIndeterminateNodes,
+      selectedItems: updatedSelectedItems,
     });
   }
 
   function updateCheckedState(currentNode, isChecked) {
     let updatedCheckedNodes = [...checkedState.checkedNodes];
     let updatedIndeterminateNodes = [...checkedState.indeterminateNodes];
+    let updatedSelectedItems = [...checkedState.selectedItems];
 
     if (isChecked) {
       if (!updatedCheckedNodes.includes(currentNode.id)) {
@@ -44,9 +49,13 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
       updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
         (id) => id !== currentNode.id
       );
+      updatedSelectedItems.push(currentNode);
     } else {
       updatedCheckedNodes = updatedCheckedNodes.filter(
         (id) => id !== currentNode.id
+      );
+      updatedSelectedItems = updatedSelectedItems.filter(
+        (node) => node.id !== currentNode.id
       );
     }
 
@@ -102,7 +111,11 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
     }
 
     updateParentState(currentNode.Parentnodeid);
-    return { updatedCheckedNodes, updatedIndeterminateNodes };
+    return {
+      updatedCheckedNodes,
+      updatedIndeterminateNodes,
+      updatedSelectedItems,
+    };
   }
 
   return (
