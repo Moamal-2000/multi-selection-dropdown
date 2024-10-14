@@ -67,16 +67,18 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
       const indeterminateChildren = childIds.filter((id) =>
         updatedIndeterminateNodes.includes(id)
       );
+
       const allChildrenChecked =
         checkedChildren.length === childIds.length &&
         indeterminateChildren.length === 0;
-      const isParentUnchecked = !updatedCheckedNodes.includes(parentNode.id);
 
-      if (checkedChildren.length === 0) {
+      const noChildrenChecked =
+        checkedChildren.length === 0 && indeterminateChildren.length === 0;
+
+      if (noChildrenChecked) {
         updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
           (id) => id !== parentNode.id
         );
-
         updatedCheckedNodes = updatedCheckedNodes.filter(
           (id) => id !== parentNode.id
         );
@@ -84,15 +86,13 @@ const MultiSelectDropdown = ({ data, checkedState, setCheckedState }) => {
         updatedIndeterminateNodes = updatedIndeterminateNodes.filter(
           (id) => id !== parentNode.id
         );
-
-        if (isParentUnchecked) {
+        if (!updatedCheckedNodes.includes(parentNode.id)) {
           updatedCheckedNodes.push(parentNode.id);
         }
       } else {
         if (!updatedIndeterminateNodes.includes(parentNode.id)) {
           updatedIndeterminateNodes.push(parentNode.id);
         }
-
         updatedCheckedNodes = updatedCheckedNodes.filter(
           (id) => id !== parentNode.id
         );
